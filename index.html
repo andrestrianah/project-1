@@ -10,18 +10,32 @@
     <link rel="stylesheet" href="css/card-deck-css/css/cardstarter.css" />
 </head>
 <body background = "imgs/black-background.jpg" >
-    <h1></br>BLACKJACK</h1>
+    <h1>BLACKJACK by <strong>NESTOR TRIANA</strong></h1>
     <main>
-        <button id="double" class="button">DOUBLE</button>
+        <div id="two" class="bet">200</div>
+        <div id="five" class="bet">500</div>
         <div id="cpu-hand">COMPUTER CARDS HERE</div>
-        <div id="200" class="bet">200</div>
-        <button id="stand" class="button">STAND</button>
-        <div id="ply-hand">PLAYER CARDS HERE</div>    
-        <div id="500" class="bet">500</div>
+        <div class="button-container">
+        <button id="double" class="button">DOUBLE</button>
+        <button id="start">PLAY</button> 
         <button id="hit" class="button">HIT</button>
+        <button id="replay">RESET</button>
+        <button id="stand" class="button">STAND</button>
+            
+       </div>
+        <div id="ten" class="bet">1000</div>
+        <div id="twenty" class="bet">2000</div>
+        <div id="ply-hand">PLAYER CARDS HERE</div>   
+        <p1> BET: $<span id="cashbet"></span></p1>
+        <p2> CASH: $<span id="cash"></span></p2> 
         <div id="ply-count">18</div>
-        <div id="1000" class="bet">1000</div>
+        <h2>deck</h2>
+        <div>THE<span id="winner"> </span>WINS $<span id="reward"> </span>.</div>
+       
+       
+        
     </main>
+    
     
 </body>
 </html>

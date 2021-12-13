@@ -18,21 +18,57 @@
 
   main {
     display: grid;
-    grid-template-columns: 30vmin 70vmin 15vmin 15vmin ;
-    grid-template-rows: 40vmin 40vmin 20vmin ;
+    grid-template-columns: 20vmin 20vmin 80vmin 60vmin   ;
+    grid-template-rows: 40vmin 40vmin 10vmin ;
+    grid-template-areas:
+    "first second cpcards deck"
+    "third fourth plycards betchoices"
+    "bet stack count play "
   }
 
   main * {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
-    
+    align-items: center;   
   }
 
-  .button {
-    position: relative;
-    display: block;
+  #two {
+    grid-area: first;
+    background-color: rgb(126, 16, 16);
+  }
+
+  #five{ 
+    grid-area: second;
+    background-color: rgb(15, 107, 64);
+  }
+
+  #ten {
+    grid-area: third;
+    background-color: rgb(25, 79, 110);
+  }
+
+  #twenty {
+    grid-area: fourth;
+    background-color: rgb(172, 158, 39);
+  }
+
+  #cpu-hand {
+      grid-area: cpcards;
+  }
+
+  h2{
+      grid-area: deck;
+  }
+
+  #ply-hand{
+      grid-area: plycards;
+  }
+
+  .button-container *{
+    grid-area: betchoices;
+    display: flex;
+    flex-direction: row; 
     margin: 30px auto;
     width: 100px;
     height: 100px;
@@ -43,5 +79,37 @@
     font-family: Helvetica;
     color:rgba(38, 41, 21, 0.548);;
     background-color: rgb(188, 190, 26) ;
+  }
+  
+  .bet {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    margin: 30px auto;
+    width: 100px;
+    height: 100px;
+    border: 13px dashed white;
+    border-radius: 50%;
+    line-height: 100px;
+    text-align: center;
+    font-family: Helvetica;
+    color: white;
+
+  }
+
+  p1 {
+      grid-area: bet;
+  }
+
+  p2 {
+      grid-area: stack;
+  }
+
+  #ply-count{
+      grid-area: count;
+  }
+
+  #replay{
+      grid-area: play;
   }
   
