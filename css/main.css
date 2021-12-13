@@ -1,0 +1,47 @@
+    html, * {
+    color: #eee;
+    font-family: 'Poiret One', cursive;
+    box-sizing: border-box;
+  }
+    
+    body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #eee;
+   
+   
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: 30vmin 70vmin 15vmin 15vmin ;
+    grid-template-rows: 40vmin 40vmin 20vmin ;
+  }
+
+  main * {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .button {
+    position: relative;
+    display: block;
+    margin: 30px auto;
+    width: 100px;
+    height: 100px;
+    border: 13px dashed rgba(38, 41, 21, 0.548);
+    border-radius: 50%;
+    line-height: 100px;
+    text-align: center;
+    font-family: Helvetica;
+    color:rgba(38, 41, 21, 0.548);;
+    background-color: rgb(188, 190, 26) ;
+  }
+  
