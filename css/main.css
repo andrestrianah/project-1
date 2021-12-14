@@ -19,11 +19,13 @@
   main {
     display: grid;
     grid-template-columns: 20vmin 20vmin 80vmin 60vmin   ;
-    grid-template-rows: 40vmin 40vmin 10vmin ;
+    grid-template-rows: 40vmin 40vmin 10vmin 10vmin ;
     grid-template-areas:
     "first second cpcards deck"
     "third fourth plycards betchoices"
     "bet stack count play "
+    "reset deal winmsg replay"
+    
   }
 
   main * {
@@ -65,6 +67,22 @@
       grid-area: plycards;
   }
 
+  .setting *{
+    grid-area: replay;
+    display: flex;
+    flex-direction: row; 
+    margin: 30px auto;
+    width: 100px;
+    height: 100px;
+    border: 13px dashed rgba(0, 0, 0, 0.548);
+    border-radius: 50%;
+    line-height: 100px;
+    text-align: center;
+    font-family: Helvetica;
+    color:rgba(0, 0, 0, 0.548);;
+    background-color: rgb(47, 60, 134) ;
+  }
+
   .button-container *{
     grid-area: betchoices;
     display: flex;
@@ -81,7 +99,7 @@
     background-color: rgb(188, 190, 26) ;
   }
   
-  .bet {
+  .betCoins {
     display: flex;
     position: relative;
     flex-direction: row;
@@ -94,8 +112,8 @@
     text-align: center;
     font-family: Helvetica;
     color: white;
-
   }
+
 
   p1 {
       grid-area: bet;
@@ -109,7 +127,39 @@
       grid-area: count;
   }
 
-  #replay{
-      grid-area: play;
+  #reset {
+    grid-area: reset;
+    display: flex;
+    flex-direction: row; 
+    margin: 30px auto;
+    width: 100px;
+    height: 100px;
+    border: 13px dashed rgba(0, 0, 0, 0.548);
+    border-radius: 50%;
+    line-height: 100px;
+    text-align: center;
+    font-family: Helvetica;
+    color:rgba(0, 0, 0, 0.548);;
+    background-color: rgb(255, 255, 255) ;
+  }
+
+  #deal{
+    grid-area: deal;
+    display: flex;
+    flex-direction: row; 
+    margin: 30px auto;
+    width: 100px;
+    height: 100px;
+    border: 13px dashed rgba(0, 0, 0, 0.548);
+    border-radius: 50%;
+    line-height: 100px;
+    text-align: center;
+    font-family: Helvetica;
+    color:rgba(0, 0, 0, 0.548);;
+    background-color: rgb(255, 255, 255) ;
   }
   
+  #winner {
+    grid-area: winmsg;
+    font-size: 40px;
+  }

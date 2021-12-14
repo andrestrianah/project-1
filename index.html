@@ -11,22 +11,25 @@
     <script defer src="js/main.js"></script>
 </head>
 <body background = "imgs/black-background.jpg" >
-    <h1>BLACKJACK </h1>
-    <h5>by NESTOR TRIANA</h5>
+    <h1></br>BLACKJACK by NESTOR TRIANA</h1>
     <main>
-        <div id="two" class="bet">200</div>
-        <div id="five" class="bet">500</div>
+        <div id="two" class="betCoins">200</div>
+        <div id="five" class="betCoins">500</div>
         <div id="cpu-hand"></div>
-        
+
         <div class="button-container">
         <button id="double" class="button">DOUBLE</button>
-        <button id="start">PLAY</button> 
         <button id="hit" class="button">HIT</button>
-        <button id="replay">RESET</button>
         <button id="stand" class="button">STAND</button>
         </div>
-        <div id="ten" class="bet">1000</div>
-        <div id="twenty" class="bet">2000</div>
+        <div class="setting">
+        <button id="start">PLAY</button>
+        <button id="replay">REPLAY</button>
+        </div>
+        <button id="reset">RESET</button>
+        <button id="deal">DEAL</button>
+        <div id="ten" class="betCoins">1000</div>
+        <div id="twenty" class="betCoins">2000</div>
         <div id="ply-hand"></div>   
         <p1> BET: $<span id="cashbet"></span></p1>
         <p2> CASH: $<span id="cash"></span></p2> 

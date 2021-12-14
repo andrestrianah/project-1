@@ -34,7 +34,7 @@ const masterDeck = buildMasterDeck();
 // Set a variable for the player's hand, the computer's hand , the money that the player has (the bank), the bet, the deck(needs to be shuffled when there is no more cards, the cards that have been dealt and have to be placeit again on the deck, a stand variable and the results of the game (winner) 
 
 // bonus: split variable (if the first two cards of the player are the same, split the cards and play with two hands with the initial amount of the bet for each hand)
-let newDeck;
+let gameDeck;
 let playerTotal;
 let playerHand = [];
 let cpuTotal;
@@ -44,8 +44,10 @@ let shuffledDeck;
 let stand;
 // 3.Cache elements that need to be updated in the htm:
 
-// buttons(hit,replay,double,play again,split,etc) , player and computer cards , the chips, the player's hand count,the wining message and the bank.
+// buttons(hit,replay,double,play,split,etc) , player and computer cards , the chips, the player's hand count,the wining message and the bank.
 
+const coins = document.querySelector(".betCoins");
+const 
 // 4.add the event listeners for the buttons (hit,replay,double,play again,split,etc)
 
 // 5.call the init function. The purpose of init, is to initialize our state variables for the start of the game, so give the initial values for the init function.
