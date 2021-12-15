@@ -22,11 +22,6 @@ const ranks = [
 const limit = 21;
 
 const masterDeck = buildMasterDeck();
-
-
-
-
-
 // Also, add the images of each card and some sounds for the game.
 
 // 2.It's time for the state variables, do not set a value right now. 
@@ -46,23 +41,112 @@ let stand;
 
 // buttons(hit,replay,double,play,split,etc) , player and computer cards , the chips, the player's hand count,the wining message and the bank.
 
-const coins = document.querySelectorAll(".betCoins");
-let computerHand = document.getElementById("cpu-hand");
-let playerHand = document.getElementById("ply-hand")
+const coins = document.querySelector(".betCoins");
+let computerHandEl = document.getElementById("cpu-hand");
+let playerHandEl = document.getElementById("ply-hand")
 let winnerMessage = document.getElementById("winner");
 let plyCount= document.getElementById("ply-count");
 let bet =document.getElementById("cashbet");
 let cash =document.getElementById("cash");
+const replayEl = document.getElementById("replay");
+const standEl = document.getElementById("stand");
+const hitEl = document.getElementById("hit");
+const dble = document.getElementById("double"); 
+const resetEl = document.getElementById("reset");
+const dealEl = document.getElementById("deal");
+
+
 
 
 // 4.add the event listeners for the buttons (hit,replay,double,play again,split,etc)
 
-// 5.call the init function. The purpose of init, is to initialize our state variables for the start of the game, so give the initial values for the init function.
+coins.childNodes.addEventListener("click",pushBet);
+resetEl.addEventListener("click",pushBet);
+dealEl.addEventListener("click",plyTurn);
+replayEl.addEventListener("click",replayGame);
+standEl.addEventListener("click",cmpTurn);
+hit.addEventListener("click",pushBet);
+dble.addEventListener("click",doble);
 
+// 5.call the init function. The purpose of init, is to initialize our state variables for the start of the game, so give the initial values for the init function.
+ function init(){
+   bet = 0;
+   cash = 10000;
+   replayEl.style.visibility = hidden;
+   replayEl.style.visibility = hidden;
+   replayEl.style.visibility = hidden;
+   replayEl.style.visibility = hidden;
+
+ }
 // 6. invoke the render function to transfer all the data that needs to be update on the dom. 
 
 // for the blackjack , you first will need to update the bank and the bet, after that, give the cards for the player and the computer and count the player cards.Then , if the player cards are over 21 or if it is lower to the computers hand(not over 21), computer wins and pop de message for the winner, if the player has a better hand than the computer or if the computer is bust(over 21), pop the message for the player. if both players have the same count, the player get the money back and is a tie.
 // if the first two cards of the player are an A's and a ten, player wins unless computer has a blackjack too. 
+
+function pushBet(e) {
+  if (cash >= parseInt(e.target.innerHTML)) {
+    bet += parseInt(e.target.innerHTML);
+    cash -= parseInt(e.target.innerHTML);
+    render();
+  }
+  if (e.target.id === "reset") {
+    cash += bet;
+    bet = 0;
+    render();
+  }
+}
+
+
+function getNewShuffledDeck() {
+  // Create a copy of the masterDeck (leave masterDeck untouched!)
+  const tempDeck = [...masterDeck];
+  const newShuffledDeck = [];
+  while (tempDeck.length) {
+    // Get a random index for a card still in the tempDeck
+    const rndIdx = Math.floor(Math.random() * tempDeck.length);
+    // Note the [0] after splice - this is because splice always returns an array and we just want the card object in that array
+    newShuffledDeck.push(tempDeck.splice(rndIdx, 1)[0]);
+  }
+  return newShuffledDeck;
+}
+
+function renderNewShuffledDeck() {
+  // Create a copy of the masterDeck (leave masterDeck untouched!)
+  shuffledDeck = getNewShuffledDeck();
+  renderDeckInContainer(shuffledDeck, shuffledContainer);
+}
+
+function renderDeckInContainer(deck, container) {
+  container.innerHTML = '';
+  // Let's build the cards as a string of HTML
+  let cardsHtml = '';
+  deck.forEach(function(card) {
+    cardsHtml += `<div class="card ${card.face}"></div>`;
+  });
+  // Or, use reduce to 'reduce' the array into a single thing - in this case a string of HTML markup 
+  // const cardsHtml = deck.reduce(function(html, card) {
+  //   return html + `<div class="card ${card.face}"></div>`;
+  // }, '');
+  container.innerHTML = cardsHtml;
+}
+
+function buildMasterDeck() {
+  const deck = [];
+  // Use nested forEach to generate card objects
+  suits.forEach(function(suit) {
+    ranks.forEach(function(rank) {
+      deck.push({
+        // The 'face' property maps to the library's CSS classes for cards
+        face: `${suit}${rank}`,
+        // Setting the 'value' property for game of blackjack, not war
+        value: Number(rank) || (rank === 'A' ? 11 : 10)
+      });
+    });
+  });
+  return deck;
+}
+
+renderNewShuffledDeck();
 
 // also give a function for the split and double option.
 

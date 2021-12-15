@@ -19,7 +19,7 @@
   main {
     display: grid;
     grid-template-columns: 20vmin 20vmin 80vmin 60vmin   ;
-    grid-template-rows: 40vmin 40vmin 10vmin 10vmin ;
+    grid-template-rows: 30vmin 30vmin 10vmin 10vmin ;
     grid-template-areas:
     "first second cpcards deck"
     "third fourth plycards betchoices"
@@ -67,8 +67,8 @@
       grid-area: plycards;
   }
 
-  .setting *{
-    grid-area: replay;
+  #replay {
+    grid-area: play;
     display: flex;
     flex-direction: row; 
     margin: 30px auto;
