@@ -46,8 +46,15 @@ let stand;
 
 // buttons(hit,replay,double,play,split,etc) , player and computer cards , the chips, the player's hand count,the wining message and the bank.
 
-const coins = document.querySelector(".betCoins");
-const 
+const coins = document.querySelectorAll(".betCoins");
+let computerHand = document.getElementById("cpu-hand");
+let playerHand = document.getElementById("ply-hand")
+let winnerMessage = document.getElementById("winner");
+let plyCount= document.getElementById("ply-count");
+let bet =document.getElementById("cashbet");
+let cash =document.getElementById("cash");
+
+
 // 4.add the event listeners for the buttons (hit,replay,double,play again,split,etc)
 
 // 5.call the init function. The purpose of init, is to initialize our state variables for the start of the game, so give the initial values for the init function.
