@@ -13,10 +13,12 @@
 <body background = "imgs/black-background.jpg" >
     <h1>BLACKJACK by NESTOR TRIANA</h1>
     <main>
-        <div id="two" class="betCoins">200</div>
-        <div id="five" class="betCoins">500</div>
-        <div id="ten" class="betCoins">1000</div>
-        <div id="twenty" class="betCoins">2000</div>
+        <div id="betCoins">
+        <div id="two" class="coins">200</div>
+        <div id="five" class="coins">500</div>
+        <div id="ten" class="coins">1000</div>
+        <div id="twenty" class="coins">2000</div>
+        </div>
         <div id="cpu-hand"></div>
         <div class="button-container">
         <button id="double" class="button">DOUBLE</button>
@@ -25,7 +27,7 @@
         </div>
         <button id="replay">REPLAY</button>
         <button id="reset">RESET</button>
-        <button id="deal">DEAL</button>
+        <div id="deal">DEAL</div>
         <div id="ply-hand"></div>   
         <p1> BET: $<span id="cashbet"></span></p1>
         <p2> CASH: $<span id="cash"></span></p2> 

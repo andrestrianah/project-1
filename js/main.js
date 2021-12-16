@@ -42,7 +42,7 @@ let bet;
 
 // buttons(hit,replay,double,play,split,etc) , player and computer cards , the chips, the player's hand count,the wining message and the bank.
 
-let twentyEl = document.getElementById("#twenty");
+let twentyEl = document.getElementById("betCoins");
 let computerHandCon = document.getElementById("cpu-hand");
 let playerHandCon = document.getElementById("ply-hand")
 let winnerMessage = document.getElementById("winner");
@@ -67,6 +67,7 @@ dble.addEventListener("click",doble);
 
 
 // 5.call the init function. The purpose of init, is to initialize our state variables for the start of the game, so give the initial values for the init function.
+gameDeck = getNewShuffledDeck();
 
 function init(){
    bet = 0;
@@ -79,13 +80,14 @@ function init(){
 
 
 function pushBet(e){
-  amount = parseInt(e.target.innerContent);
+  amount = parseInt(e.target.innerText);
+  console.log(amount);
   if (money >= amount){
     bet = bet + amount;
     money = money - amount;
     render();
   } else if (e.target.id === "reset" ){
-    money = money - bet;
+    money = money + bet;
     bet = 0
     render();
   } 
@@ -97,22 +99,29 @@ function doble(e){
     bet = bet + bet;
     plyTurn();
     cmpTurn();
-    render();
   }
+
+  render();
 }
 
 function replayGame(){
 
 }
 
-function plyTurn(){
+function plyTurn(e){
+  if (e.target.id === "deal"){
   plyPlay = true;
-  if(cpuHand.length === 0 && playerHand === 0){
-    playerHand.renderDeckInContainer([0])
+  console.log("itsmeagain");
+  if(bet > 0){
+    
+    console.log("whereare the cards");
+    playerHand = gameDeck.splice(0, 2);
   }
+  } 
+  render()
 }
 
-function compTurn(){
+function cmpTurn(){
 
 }
 
@@ -120,6 +129,7 @@ function compTurn(){
 // for the blackjack , you first will need to update the bank and the bet, after that, give the cards for the player and the computer and count the player cards.Then , if the player cards are over 21 or if it is lower to the computers hand(not over 21), computer wins and pop de message for the winner, if the player has a better hand than the computer or if the computer is bust(over 21), pop the message for the player. if both players have the same count, the player get the money back and is a tie.
 // if the first two cards of the player are an A's and a ten, player wins unless computer has a blackjack too. 
 function render(){
+
   betEl.innerHTML = bet;
   cashEl.innerHTML = money;
   replayEl.style.visibility = "hidden";
@@ -127,8 +137,8 @@ function render(){
   hitEl.style.visibility = "hidden";
   dble.style.visibility = "hidden";
 
-  playerHandCon = "";
-  computerHandCon = "";  
+  playerHandCon.innerHTML = "";
+  computerHandCon.innerHTML = "";  
   if(bet === 0 && playerHand.length === 0 && cpuHand.length === 0){
     winnerMessage = "CLICK ON THE CHIPS TO START THE GAME."
   }else if (bet >= 0 && playerHand.length === 0 && cpuHand.length === 0){
@@ -137,10 +147,8 @@ function render(){
     standEl.style.visibility = "visible";
    hitEl.style.visibility = "visible";
   } else if(playerHand.length === 2){
-     dobdble.style.visibility = "visible";
-  } else if(){
-    
-  }
+     dble.style.visibility = "visible";
+  } 
 
 
 
