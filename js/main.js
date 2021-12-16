@@ -42,7 +42,7 @@ let bet;
 
 // buttons(hit,replay,double,play,split,etc) , player and computer cards , the chips, the player's hand count,the wining message and the bank.
 
-let coins = document.querySelectorAll(".betCoins");
+let twentyEl = document.getElementById("#twenty");
 let computerHandCon = document.getElementById("cpu-hand");
 let playerHandCon = document.getElementById("ply-hand")
 let winnerMessage = document.getElementById("winner");
@@ -57,7 +57,7 @@ const resetEl = document.getElementById("reset");
 const dealEl = document.getElementById("deal");
 
 // 4.add the event listeners for the buttons (hit,replay,double,play again,split,etc)
-coins.addEventListener("click",pushBet);
+twentyEl.addEventListener("click",pushBet);
 resetEl.addEventListener("click",pushBet);
 dealEl.addEventListener("click",plyTurn);
 replayEl.addEventListener("click",replayGame);
@@ -67,7 +67,8 @@ dble.addEventListener("click",doble);
 
 
 // 5.call the init function. The purpose of init, is to initialize our state variables for the start of the game, so give the initial values for the init function.
- function init(){
+
+function init(){
    bet = 0;
    money = 10000;
    plyPlay = false;
@@ -93,17 +94,22 @@ function pushBet(e){
 function doble(e){
   if (e.target.id === "double"){
     money = money - bet;
-    bet = bet * 2;
+    bet = bet + bet;
+    plyTurn();
+    cmpTurn();
     render();
-  };
+  }
 }
 
 function replayGame(){
 
 }
 
-function plyTurn (){
-
+function plyTurn(){
+  plyPlay = true;
+  if(cpuHand.length === 0 && playerHand === 0){
+    playerHand.renderDeckInContainer([0])
+  }
 }
 
 function compTurn(){
@@ -127,11 +133,13 @@ function render(){
     winnerMessage = "CLICK ON THE CHIPS TO START THE GAME."
   }else if (bet >= 0 && playerHand.length === 0 && cpuHand.length === 0){
     winnerMessage = "";
-  } else if ( bet >= 0 && playerHand.length >= 2 && cpuHand.length >=2) {
+  } else if ( bet > 0 && playerHand.length >= 2 && cpuHand.length >=2) {
     standEl.style.visibility = "visible";
    hitEl.style.visibility = "visible";
   } else if(playerHand.length === 2){
      dobdble.style.visibility = "visible";
+  } else if(){
+    
   }
 
 
@@ -187,6 +195,8 @@ function buildMasterDeck() {
 }
 
 init();
+
+
 
 // also give a function for the split and double option.
 
