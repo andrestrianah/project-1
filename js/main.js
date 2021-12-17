@@ -32,12 +32,11 @@ let playerTotal;
 let playerHand = [];
 let cpuTotal;
 let cpuHand = [];
-let winner = null;
-let shuffledDeck;
 let money;
 let bet;
 let stand;
 let deal;
+let usedCards = [];
 // 3.Cache elements that need to be updated in the htm:
 
 // buttons(hit,replay,double,play,split,etc) , player and computer cards , the chips, the player's hand count,the wining message and the bank.
@@ -73,6 +72,7 @@ function init(){
    bet = 0;
    money = 10000;
    console.log('init working')
+   
    render();
  }
 
@@ -88,7 +88,9 @@ function pushBet(e){
     money = money + bet;
     bet = 0
     render();
-  } 
+  } else if (money === 0 && bet === 0 ){
+    winnerMessage.innerHTML="Refresh the page for more money";
+  }
 }
 
 function plyTurn(e){
@@ -171,12 +173,13 @@ function render(){
   plyCount.innerHTML="";
   if(bet === 0 && playerHand.length === 0 && cpuHand.length === 0){
     winnerMessage.innerHTML = "CLICK ON THE CHIPS TO START THE GAME."
-  }else if (bet >= 0 && playerHand.length === 0 && cpuHand.length === 0){
+  }else if (bet > 0 && playerHand.length === 0 && cpuHand.length === 0){
     winnerMessage.innerHTML = "";
   } else if ( bet > 0 && playerHand.length >= 2 && cpuHand.length >=2) {
     standEl.style.visibility = "visible";
     hitEl.style.visibility = "visible";
     resetEl.style.visibility = "hidden";
+    dealEl.style.visibility = "hidden";
 
     renderDeckInContainer(playerHand, playerHandCon)
     renderDeckInContainer(cpuHand,computerHandCon)
@@ -185,38 +188,58 @@ function render(){
     cpuTotal = count(cpuHand);
     plyCount.innerHTML = "PLAYER HAND: " + playerTotal;
   } if (deal){
-    coinsEl.removeEventListener("click",pushBet);
-  }  if (stand){ 
-    if (playerTotal <= 21 && cpuTotal > 21){
-      winner="player"
-      winnerMessage.innerHTML="DEALER BUSTED, PLAYER WINS."
-    } else if (playerTotal > 21 ){
-      winner=
-      winnerMessage.innerHTML = "YOU'RE BUSTED";
-    } else if (cpuTotal <=21 && cpuTotal > playerTotal && cpuHand.length >= 2){
-      winnerMessage.innerHTML = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". DEALER WINS.";
-    }   else if (playerTotal <=21 && playerTotal >cpuTotal && playerHand.length >= 2){
-      winnerMessage.innerHTML = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". PLAYER WINS.";
-    } else if(cpuTotal === playerTotal  && playerHand.length >= 2){
-      winnerMessage.innerHTML = "IT IS A TIE, YOU GET YOUR MONEY BACK";
-      money = money + bet;
-    } else if(playerTotal === 21 && playerHand.length === 2){
-      winnerMessage.innerHTML = "BLACKJACK!!! PLAYER WINS";
+     coinsEl.removeEventListener("click",pushBet);
+  }  if (stand){
+      if(playerTotal === 21 && playerHand.length === 2){
+        winnerMessage.innerHTML = "BLACKJACK!!! PLAYER WINS";
+        money = money + bet * 3;
     } else if(cpuTotal === 21 && cpuHand.length === 2){
-    winnerMessage.innerHTML = "BLACKJACK!!! DEALER WINS";
-    }
+      winnerMessage.innerHTML = "BLACKJACK!!! DEALER WINS";
+    }else if (playerTotal <= 21 && cpuTotal > 21){
+        winnerMessage.innerHTML="DEALER BUSTED, PLAYER WINS.";
+        money = money + bet * 2;
+    } else if (playerTotal > 21 ){
+        winnerMessage.innerHTML = "YOU'RE BUSTED";
+    } else if (cpuTotal <=21 && cpuTotal > playerTotal && cpuHand.length >= 2){
+        winnerMessage.innerHTML = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". DEALER WINS.";
+    } else if (playerTotal <=21 && playerTotal >cpuTotal && playerHand.length >= 2){
+        money = money + bet * 2;
+        winnerMessage.innerHTML = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". PLAYER WINS.";
+    } else if(cpuTotal === playerTotal  && playerHand.length >= 2){
+        money = money + bet;
+        winnerMessage.innerHTML = "IT IS A TIE, YOU GET YOUR MONEY BACK";
+    } 
     replayEl.style.visibility = "visible";
     standEl.style.visibility = "hidden";
     hitEl.style.visibility = "hidden";
+    
   }
 }
 
 // 7. reset the game by updating the new values for the bank and place the cards that were used in the bottom of the deck.
 function replayGame(e){
   if (e.target.id === "replay"){
-    console.log("replay works")
+    coinsEl.addEventListener("click",pushBet);
+    replayEl.style.visibility = "hidden";
+    resetEl.style.visibility = "visible";
+    dealEl.style.visibility = "visible";
+    bet = 0;
+    deal = false;
+    stand = false;
+    playerHandCon.innerHTML = "";
+    computerHandCon.innerHTML = "";
+    winnerMessage.innerHTML="";
+    usedCards = playerHand.concat(cpuHand);
+    usedCards.forEach((card) => {
+      gameDeck.push(card);
+    });
+    playerHand =[];
+    cpuHand = [];
+    usedCards = [];
+    
+    render();
   }
-
+  
 }
 
 
@@ -241,7 +264,7 @@ function renderDeckInContainer(deck, container) {
   // Let's build the cards as a string of HTML
   let cardsHtml = '';
   deck.forEach(function(card) {
-    cardsHtml += `<div class="card ${card.face}"></div>`;
+    cardsHtml += `<div class="card ${card.face} small"></div>`;
   });
   // Or, use reduce to 'reduce' the array into a single thing - in this case a string of HTML markup 
   // const cardsHtml = deck.reduce(function(html, card) {

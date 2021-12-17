@@ -19,7 +19,7 @@
   main {
     display: grid;
     grid-template-columns: 60vmin 40vmin 40vmin 60vmin   ;
-    grid-template-rows: 30vmin 30vmin 10vmin 10vmin ;
+    grid-template-rows: 30vmin 30vmin 5vmin 5vmin ;
     grid-template-areas:
     "first second cpcards deck"
     "third fourth plycards betchoices"
@@ -162,5 +162,5 @@
   
   #winner {
     grid-area: winmsg;
-    font-size: 40px;
+    font-size: 30px;
   }
