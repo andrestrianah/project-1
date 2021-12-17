@@ -18,9 +18,19 @@
 
   main {
     display: grid;
+<<<<<<< HEAD
     grid-template-columns: 60vmin 80vmin 60vmin   ;
     grid-template-rows: 30vmin 30vmin 30vmin  ;
 
+=======
+    grid-template-columns: 60vmin 40vmin 40vmin 60vmin   ;
+    grid-template-rows: 30vmin 30vmin 5vmin 5vmin ;
+    grid-template-areas:
+    "first second cpcards deck"
+    "third fourth plycards betchoices"
+    "bet stack count play "
+    "reset deal winmsg replay"
+>>>>>>> main
     
   }
 
@@ -105,9 +115,25 @@
   
   .dealOptions *{
 
+<<<<<<< HEAD
     display: grid;
     grid-column-start: -4;
     grid-row-start: 4; 
+=======
+  p2 {
+      grid-area: stack;
+  }
+
+  #ply-count{
+    font-size: 30px;
+    grid-area: fourth;
+  }
+
+  #reset {
+    grid-area: reset;
+    display: flex;
+    flex-direction: row; 
+>>>>>>> main
     margin: 30px auto;
     width: 100px;
     height: 100px;
@@ -140,6 +166,13 @@
     background-color: rgb(47, 60, 134) ;
   }
   
+<<<<<<< HEAD
   
 
 
+=======
+  #winner {
+    grid-area: winmsg;
+    font-size: 30px;
+  }
+>>>>>>> main

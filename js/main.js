@@ -19,8 +19,6 @@ const ranks = [
   "A",
 ];
 
-const limit = 21;
-
 const masterDeck = buildMasterDeck();
 // Also, add the images of each card and some sounds for the game.
 
@@ -34,10 +32,11 @@ let playerTotal;
 let playerHand = [];
 let cpuTotal;
 let cpuHand = [];
-let winner = null;
-let shuffledDeck;
 let money;
 let bet;
+let stand;
+let deal;
+let usedCards = [];
 // 3.Cache elements that need to be updated in the htm:
 
 // buttons(hit,replay,double,play,split,etc) , player and computer cards , the chips, the player's hand count,the wining message and the bank.
@@ -51,8 +50,7 @@ let betEl =document.getElementById("cashbet");
 let cashEl =document.getElementById("cash");
 const replayEl = document.getElementById("replay");
 const standEl = document.getElementById("stand");
-const hitEl = document.getElementById("hit");
-const dble = document.getElementById("double"); 
+const hitEl = document.getElementById("hit"); 
 const resetEl = document.getElementById("reset");
 const dealEl = document.getElementById("deal");
 
@@ -61,20 +59,26 @@ coinsEl.addEventListener("click",pushBet);
 resetEl.addEventListener("click",pushBet);
 dealEl.addEventListener("click",plyTurn);
 replayEl.addEventListener("click",replayGame);
+<<<<<<< HEAD
 standEl.addEventListener("click",cmpTurn);
 hitEl.addEventListener("click",plyTurn);
 dble.addEventListener("click",doble);
+=======
+standEl.addEventListener("click",standPlay);
+hitEl.addEventListener("click",hitIt);
+>>>>>>> main
 
 
 // 5.call the init function. The purpose of init, is to initialize our state variables for the start of the game, so give the initial values for the init function.
 gameDeck = getNewShuffledDeck();
 
 function init(){
+   deal = false;
+   stand = false;
    bet = 0;
    money = 10000;
-   plyPlay = false;
-   dlrPlay = false;
    console.log('init working')
+   
    render();
  }
 
@@ -90,20 +94,40 @@ function pushBet(e){
     money = money + bet;
     bet = 0
     render();
-  } 
+  } else if (money === 0 && bet === 0 ){
+    winnerMessage.innerHTML="Refresh the page for more money";
+  }
 }
 
-function doble(e){
-  if (e.target.id === "double"){
-    money = money - bet;
-    bet = bet + bet;
-    plyTurn();
-    cmpTurn();
+function plyTurn(e){
+  if (e.target.id === "deal" && bet > 0){
+  console.log("itsmeagain");
+  deal = true;
+  if(playerHand.length === 0 && cpuHand.length === 0){
+  console.log("where are the cards");
+  cpuHand = gameDeck.splice (0,2);
+  playerHand = gameDeck.splice (0,2);
+    } 
+  if (count(playerHand) === 21) {
+      cmpTurn();
+    }
+  } 
+  render()
+}
+
+function hitIt(e){
+  if (e.target.id === "hit"){
+    console.log("you hit it")
+    playerHand.push(gameDeck.splice(0, 1)[0]);  
   }
 
+  if (count(playerHand) === 21) {
+    cmpTurn();
+  }
   render();
 }
 
+<<<<<<< HEAD
 function replayGame(){
 
 }
@@ -124,42 +148,140 @@ function plyTurn(e){
     }
   } 
   render()
+=======
+function standPlay(e){
+  if (e.target.id === "stand"){
+    stand = true;
+    console.log("stand works")
+    cmpTurn()
+  }
+>>>>>>> main
 }
 
 function cmpTurn(){
+  while (count(cpuHand) < 17){
+    cpuHand.push(gameDeck.splice(0,1)[0])
+  }
 
+render()
 }
 
 
+<<<<<<< HEAD
+=======
+
+function count(cards) {
+
+  let total = 0;
+  let hasAce = [];
+  cards.forEach(function (item) {
+    total = total + item.value;
+    if (item.value === 11) {
+      hasAce.push(true);
+    }if(playerTotal >= 21){
+      stand = true;
+    }
+  });
+  while (total > 21 && hasAce.length) {
+    total -= 10;
+    hasAce.pop();
+  }
+  return total;
+}
+>>>>>>> main
 // 6. invoke the render function to transfer all the data that needs to be update on the dom. 
 // for the blackjack , you first will need to update the bank and the bet, after that, give the cards for the player and the computer and count the player cards.Then , if the player cards are over 21 or if it is lower to the computers hand(not over 21), computer wins and pop de message for the winner, if the player has a better hand than the computer or if the computer is bust(over 21), pop the message for the player. if both players have the same count, the player get the money back and is a tie.
 // if the first two cards of the player are an A's and a ten, player wins unless computer has a blackjack too. 
 function render(){
-
+  
   betEl.innerHTML = bet;
   cashEl.innerHTML = money;
   replayEl.style.visibility = "hidden";
   standEl.style.visibility = "hidden";
   hitEl.style.visibility = "hidden";
-  dble.style.visibility = "hidden";
 
   playerHandCon.innerHTML = "";
   computerHandCon.innerHTML = "";  
+  plyCount.innerHTML="";
   if(bet === 0 && playerHand.length === 0 && cpuHand.length === 0){
-    winnerMessage = "CLICK ON THE CHIPS TO START THE GAME."
-  }else if (bet >= 0 && playerHand.length === 0 && cpuHand.length === 0){
-    winnerMessage = "";
+    winnerMessage.innerHTML = "CLICK ON THE CHIPS TO START THE GAME."
+  }else if (bet > 0 && playerHand.length === 0 && cpuHand.length === 0){
+    winnerMessage.innerHTML = "";
   } else if ( bet > 0 && playerHand.length >= 2 && cpuHand.length >=2) {
     standEl.style.visibility = "visible";
     hitEl.style.visibility = "visible";
+<<<<<<< HEAD
   } else if(playerHand.length === 2){
      dble.style.visibility = "visible";
   } 
 
 
 
+=======
+    resetEl.style.visibility = "hidden";
+    dealEl.style.visibility = "hidden";
+
+    renderDeckInContainer(playerHand, playerHandCon)
+    renderDeckInContainer(cpuHand,computerHandCon)
+  } if (playerHand.length > 0 && cpuHand.length > 0) {
+    playerTotal = count(playerHand);
+    cpuTotal = count(cpuHand);
+    plyCount.innerHTML = "PLAYER HAND: " + playerTotal;
+  } if (deal){
+     coinsEl.removeEventListener("click",pushBet);
+  }  if (stand){
+      if(playerTotal === 21 && playerHand.length === 2){
+        winnerMessage.innerHTML = "BLACKJACK!!! PLAYER WINS";
+        money = money + bet * 3;
+    } else if(cpuTotal === 21 && cpuHand.length === 2){
+      winnerMessage.innerHTML = "BLACKJACK!!! DEALER WINS";
+    }else if (playerTotal <= 21 && cpuTotal > 21){
+        winnerMessage.innerHTML="DEALER BUSTED, PLAYER WINS.";
+        money = money + bet * 2;
+    } else if (playerTotal > 21 ){
+        winnerMessage.innerHTML = "YOU'RE BUSTED";
+    } else if (cpuTotal <=21 && cpuTotal > playerTotal && cpuHand.length >= 2){
+        winnerMessage.innerHTML = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". DEALER WINS.";
+    } else if (playerTotal <=21 && playerTotal >cpuTotal && playerHand.length >= 2){
+        money = money + bet * 2;
+        winnerMessage.innerHTML = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". PLAYER WINS.";
+    } else if(cpuTotal === playerTotal  && playerHand.length >= 2){
+        money = money + bet;
+        winnerMessage.innerHTML = "IT IS A TIE, YOU GET YOUR MONEY BACK";
+    } 
+    replayEl.style.visibility = "visible";
+    standEl.style.visibility = "hidden";
+    hitEl.style.visibility = "hidden";
+    
+  }
+>>>>>>> main
 }
 
+// 7. reset the game by updating the new values for the bank and place the cards that were used in the bottom of the deck.
+function replayGame(e){
+  if (e.target.id === "replay"){
+    coinsEl.addEventListener("click",pushBet);
+    replayEl.style.visibility = "hidden";
+    resetEl.style.visibility = "visible";
+    dealEl.style.visibility = "visible";
+    bet = 0;
+    deal = false;
+    stand = false;
+    playerHandCon.innerHTML = "";
+    computerHandCon.innerHTML = "";
+    winnerMessage.innerHTML="";
+    usedCards = playerHand.concat(cpuHand);
+    usedCards.forEach((card) => {
+      gameDeck.push(card);
+    });
+    playerHand =[];
+    cpuHand = [];
+    usedCards = [];
+    
+    render();
+  }
+  
+}
 
 
 
@@ -183,13 +305,20 @@ function renderDeckInContainer(deck, container) {
   // Let's build the cards as a string of HTML
   let cardsHtml = '';
   deck.forEach(function(card) {
-    cardsHtml += `<div class="card ${card.face}"></div>`;
+    cardsHtml += `<div class="card ${card.face} small"></div>`;
   });
   // Or, use reduce to 'reduce' the array into a single thing - in this case a string of HTML markup 
   // const cardsHtml = deck.reduce(function(html, card) {
   //   return html + `<div class="card ${card.face}"></div>`;
   // }, '');
   container.innerHTML = cardsHtml;
+
+  if (deck === cpuHand && cpuHand.length <= 2 ) {
+    container.firstChild.classList.add("back-blue");
+  }
+  if (stand) {
+    container.firstChild.classList.remove("back-blue");
+  }
 }
 
 function buildMasterDeck() {
@@ -214,5 +343,4 @@ init();
 
 // also give a function for the split and double option.
 
-// 7. reset the game by updating the new values for the bank and place the cards that were used in the bottom of the deck.
 
