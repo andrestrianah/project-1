@@ -61,8 +61,8 @@ coinsEl.addEventListener("click",pushBet);
 resetEl.addEventListener("click",pushBet);
 dealEl.addEventListener("click",plyTurn);
 replayEl.addEventListener("click",replayGame);
-standEl.addEventListener("click",cmpTurn);
-hitEl.addEventListener("click",plyTurn);
+standEl.addEventListener("click",standPlay);
+hitEl.addEventListener("click",hitIt);
 dble.addEventListener("click",doble);
 
 
@@ -72,8 +72,6 @@ gameDeck = getNewShuffledDeck();
 function init(){
    bet = 0;
    money = 10000;
-   plyPlay = false;
-   dlrPlay = false;
    console.log('init working')
    render();
  }
@@ -104,27 +102,50 @@ function doble(e){
   render();
 }
 
-function replayGame(){
-
-}
 
 function plyTurn(e){
-  if (e.target.id === "deal"){
-  plyPlay = true;
+  if (e.target.id === "deal" && bet > 0){
   console.log("itsmeagain");
-  if(bet > 0 && playerHand.length === 0 && cpuHand.length === 0){
+  if(playerHand.length === 0 && cpuHand.length === 0){
   console.log("where are the cards");
   cpuHand = gameDeck.splice (0,2);
   playerHand = gameDeck.splice (0,2);
-    } else {
-      playerHand.push(gameDeck.splice(0, 1)[0]);
-    }
+    } 
   if (count(playerHand) === limit) {
       cmpTurn();
     }
   } 
   render()
 }
+
+function hitIt(e){
+  if (e.target.id === "hit"){
+    console.log("you hit it")
+    playerHand.push(gameDeck.splice(0, 1)[0]);  
+  }
+
+  if (count(playerHand) === limit) {
+    cmpTurn();
+  }
+  render();
+}
+
+function standPlay(e){
+  if (e.target.id === "stand"){
+    console.log("stand works")
+    cmpTurn()
+  }
+}
+
+function cmpTurn(){
+  while (count(cpuHand) < 17){
+    cpuHand.push(gameDeck.splice(0,1)[0])
+  }
+
+render()
+}
+
+
 
 function count(cards) {
 
@@ -137,12 +158,6 @@ function count(cards) {
   });
    return total;
 }
-
-function cmpTurn(){
-
-}
-
-
 // 6. invoke the render function to transfer all the data that needs to be update on the dom. 
 // for the blackjack , you first will need to update the bank and the bet, after that, give the cards for the player and the computer and count the player cards.Then , if the player cards are over 21 or if it is lower to the computers hand(not over 21), computer wins and pop de message for the winner, if the player has a better hand than the computer or if the computer is bust(over 21), pop the message for the player. if both players have the same count, the player get the money back and is a tie.
 // if the first two cards of the player are an A's and a ten, player wins unless computer has a blackjack too. 
@@ -157,21 +172,27 @@ function render(){
 
   playerHandCon.innerHTML = "";
   computerHandCon.innerHTML = "";  
+  plyCount.innerHTML="";
   if(bet === 0 && playerHand.length === 0 && cpuHand.length === 0){
-    winnerMessage = "CLICK ON THE CHIPS TO START THE GAME."
+    winnerMessage.innerHTML = "CLICK ON THE CHIPS TO START THE GAME."
   }else if (bet >= 0 && playerHand.length === 0 && cpuHand.length === 0){
-    winnerMessage = "";
+    winnerMessage.innerHTML = "";
   } else if ( bet > 0 && playerHand.length >= 2 && cpuHand.length >=2) {
     standEl.style.visibility = "visible";
     hitEl.style.visibility = "visible";
-  } else if(playerHand.length === 2){
-     dble.style.visibility = "visible";
-  } 
-
-
+    resetEl.style.visibility = "hidden";
+    renderDeckInContainer(playerHand, playerHandCon)
+    renderDeckInContainer(cpuHand,computerHandCon)
+  } if (playerHand.length > 0) {
+    playerTotal = count(playerHand);
+    plyCount.innerHTML = playerTotal;
+  }
 
 }
 
+function replayGame(){
+
+}
 
 
 

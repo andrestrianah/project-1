@@ -124,6 +124,7 @@
   }
 
   #ply-count{
+      font-size: 40px;
       grid-area: count;
   }
 
