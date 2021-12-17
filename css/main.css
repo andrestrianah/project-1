@@ -1,4 +1,4 @@
-    html, * {
+html, * {
     color: #eee;
     font-family: 'Poiret One', cursive;
     box-sizing: border-box;
@@ -18,11 +18,6 @@
 
   main {
     display: grid;
-<<<<<<< HEAD
-    grid-template-columns: 60vmin 80vmin 60vmin   ;
-    grid-template-rows: 30vmin 30vmin 30vmin  ;
-
-=======
     grid-template-columns: 60vmin 40vmin 40vmin 60vmin   ;
     grid-template-rows: 30vmin 30vmin 5vmin 5vmin ;
     grid-template-areas:
@@ -30,7 +25,6 @@
     "third fourth plycards betchoices"
     "bet stack count play "
     "reset deal winmsg replay"
->>>>>>> main
     
   }
 
@@ -41,64 +35,56 @@
     align-items: center;   
   }
 
-  .coins {
-    display: grid;
-    position: relative;
-    grid-column-start: 1;
-    grid-row-start: 1;
-    margin: 30px auto;
-    width: 100px;
-    height: 100px;
-    border: 13px dashed white;
-    border-radius: 50%;
-    line-height: 100px;
-    text-align: center;
-    font-family: Helvetica;
-    color: white;
-  }
-
   #two {
+    grid-area: first;
     background-color: rgb(126, 16, 16);
   }
 
   #five{ 
+    grid-area: second;
     background-color: rgb(15, 107, 64);
   }
 
   #ten {
-    
+    grid-area: third;
     background-color: rgb(25, 79, 110);
   }
 
   #twenty {
-  
+    grid-area: fourth;
     background-color: rgb(172, 158, 39);
   }
 
   #cpu-hand {
-    grid-column-start: 2;
-    grid-row-start: 1;
-    justify-content: center;
+      grid-area: cpcards;
   }
 
-  h2 {
-    grid-row-start: 1;
-    grid-column-start: 3;
-    justify-content: center;
+  h2{
+      grid-area: deck;
   }
 
-  #betCash {
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 2;
- }
-  
   #ply-hand{
-  
+      grid-area: plycards;
+  }
+
+  #replay {
+    grid-area: play;
+    display: flex;
+    flex-direction: row; 
+    margin: 30px auto;
+    width: 100px;
+    height: 100px;
+    border: 13px dashed rgba(0, 0, 0, 0.548);
+    border-radius: 50%;
+    line-height: 100px;
+    text-align: center;
+    font-family: Helvetica;
+    color:rgba(0, 0, 0, 0.548);;
+    background-color: rgb(47, 60, 134) ;
   }
 
   .button-container *{
-
+    grid-area: betchoices;
     display: flex;
     flex-direction: row; 
     margin: 30px auto;
@@ -113,13 +99,26 @@
     background-color: rgb(188, 190, 26) ;
   }
   
-  .dealOptions *{
+  .coins {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    margin: 30px auto;
+    width: 100px;
+    height: 100px;
+    border: 13px dashed white;
+    border-radius: 50%;
+    line-height: 100px;
+    text-align: center;
+    font-family: Helvetica;
+    color: white;
+  }
 
-<<<<<<< HEAD
-    display: grid;
-    grid-column-start: -4;
-    grid-row-start: 4; 
-=======
+
+  p1 {
+      grid-area: bet;
+  }
+
   p2 {
       grid-area: stack;
   }
@@ -133,7 +132,6 @@
     grid-area: reset;
     display: flex;
     flex-direction: row; 
->>>>>>> main
     margin: 30px auto;
     width: 100px;
     height: 100px;
@@ -146,12 +144,8 @@
     background-color: rgb(255, 255, 255) ;
   }
 
-  #ply-count{
-
-  }
-
-  #replay {
-;
+  #deal{
+    grid-area: deal;
     display: flex;
     flex-direction: row; 
     margin: 30px auto;
@@ -163,16 +157,10 @@
     text-align: center;
     font-family: Helvetica;
     color:rgba(0, 0, 0, 0.548);;
-    background-color: rgb(47, 60, 134) ;
+    background-color: rgb(255, 255, 255) ;
   }
   
-<<<<<<< HEAD
-  
-
-
-=======
   #winner {
     grid-area: winmsg;
     font-size: 30px;
   }
->>>>>>> main

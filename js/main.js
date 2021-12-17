@@ -76,7 +76,7 @@ function init(){
    render();
  }
 
-
+// Create the rest of the functions.
 function pushBet(e){
   amount = parseInt(e.target.innerText);
   console.log(amount);
@@ -298,8 +298,5 @@ function buildMasterDeck() {
 
 init();
 
-
-
-// also give a function for the split and double option.
 
 
