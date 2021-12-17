@@ -25,3 +25,10 @@ Me, as a player ,...
 * I want to see my count, so I can focus more on the play that in the math of the cards.
 * I want to start with a good stack of money, so I can play more time.
 
+<h2>Next Steps</h2>
+
+* Add a "Double" button option.
+* Add an "split" option when you start with two cards with the same rank.
+* Include some sounds to the game.
+
+

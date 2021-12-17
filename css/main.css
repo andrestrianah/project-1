@@ -1,166 +1,166 @@
-    html, * {
-    color: #eee;
-    font-family: 'Poiret One', cursive;
-    box-sizing: border-box;
-  }
-    
-    body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #eee;
-   
-   
-  }
-
-  main {
-    display: grid;
-    grid-template-columns: 60vmin 40vmin 40vmin 60vmin   ;
-    grid-template-rows: 30vmin 30vmin 5vmin 5vmin ;
-    grid-template-areas:
-    "first second cpcards deck"
-    "third fourth plycards betchoices"
-    "bet stack count play "
-    "reset deal winmsg replay"
-    
-  }
-
-  main * {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;   
-  }
-
-  #two {
-    grid-area: first;
-    background-color: rgb(126, 16, 16);
-  }
-
-  #five{ 
-    grid-area: second;
-    background-color: rgb(15, 107, 64);
-  }
-
-  #ten {
-    grid-area: third;
-    background-color: rgb(25, 79, 110);
-  }
-
-  #twenty {
-    grid-area: fourth;
-    background-color: rgb(172, 158, 39);
-  }
-
-  #cpu-hand {
-      grid-area: cpcards;
-  }
-
-  h2{
-      grid-area: deck;
-  }
-
-  #ply-hand{
-      grid-area: plycards;
-  }
-
-  #replay {
-    grid-area: play;
-    display: flex;
-    flex-direction: row; 
-    margin: 30px auto;
-    width: 100px;
-    height: 100px;
-    border: 13px dashed rgba(0, 0, 0, 0.548);
-    border-radius: 50%;
-    line-height: 100px;
-    text-align: center;
-    font-family: Helvetica;
-    color:rgba(0, 0, 0, 0.548);;
-    background-color: rgb(47, 60, 134) ;
-  }
-
-  .button-container *{
-    grid-area: betchoices;
-    display: flex;
-    flex-direction: row; 
-    margin: 30px auto;
-    width: 100px;
-    height: 100px;
-    border: 13px dashed rgba(38, 41, 21, 0.548);
-    border-radius: 50%;
-    line-height: 100px;
-    text-align: center;
-    font-family: Helvetica;
-    color:rgba(38, 41, 21, 0.548);;
-    background-color: rgb(188, 190, 26) ;
-  }
+html, * {
+  color: #eee;
+  font-family: 'Poiret One', cursive;
+  box-sizing: border-box;
+}
   
-  .coins {
-    display: flex;
-    position: relative;
-    flex-direction: row;
-    margin: 30px auto;
-    width: 100px;
-    height: 100px;
-    border: 13px dashed white;
-    border-radius: 50%;
-    line-height: 100px;
-    text-align: center;
-    font-family: Helvetica;
-    color: white;
-  }
+  body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #eee;
+ 
+ 
+}
 
-
-  p1 {
-      grid-area: bet;
-  }
-
-  p2 {
-      grid-area: stack;
-  }
-
-  #ply-count{
-    font-size: 30px;
-    grid-area: fourth;
-  }
-
-  #reset {
-    grid-area: reset;
-    display: flex;
-    flex-direction: row; 
-    margin: 30px auto;
-    width: 100px;
-    height: 100px;
-    border: 13px dashed rgba(0, 0, 0, 0.548);
-    border-radius: 50%;
-    line-height: 100px;
-    text-align: center;
-    font-family: Helvetica;
-    color:rgba(0, 0, 0, 0.548);;
-    background-color: rgb(255, 255, 255) ;
-  }
-
-  #deal{
-    grid-area: deal;
-    display: flex;
-    flex-direction: row; 
-    margin: 30px auto;
-    width: 100px;
-    height: 100px;
-    border: 13px dashed rgba(0, 0, 0, 0.548);
-    border-radius: 50%;
-    line-height: 100px;
-    text-align: center;
-    font-family: Helvetica;
-    color:rgba(0, 0, 0, 0.548);;
-    background-color: rgb(255, 255, 255) ;
-  }
+main {
+  display: grid;
+  grid-template-columns: 60vmin 40vmin 40vmin 60vmin   ;
+  grid-template-rows: 30vmin 30vmin 5vmin 5vmin ;
+  grid-template-areas:
+  "first second cpcards deck"
+  "third fourth plycards betchoices"
+  "bet stack count play "
+  "reset deal winmsg replay"
   
-  #winner {
-    grid-area: winmsg;
-    font-size: 30px;
-  }
+}
+
+main * {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;   
+}
+
+#two {
+  grid-area: first;
+  background-color: rgb(126, 16, 16);
+}
+
+#five{ 
+  grid-area: second;
+  background-color: rgb(15, 107, 64);
+}
+
+#ten {
+  grid-area: third;
+  background-color: rgb(25, 79, 110);
+}
+
+#twenty {
+  grid-area: fourth;
+  background-color: rgb(172, 158, 39);
+}
+
+#cpu-hand {
+    grid-area: cpcards;
+}
+
+h2{
+    grid-area: deck;
+}
+
+#ply-hand{
+    grid-area: plycards;
+}
+
+#replay {
+  grid-area: play;
+  display: flex;
+  flex-direction: row; 
+  margin: 30px auto;
+  width: 100px;
+  height: 100px;
+  border: 13px dashed rgba(0, 0, 0, 0.548);
+  border-radius: 50%;
+  line-height: 100px;
+  text-align: center;
+  font-family: Helvetica;
+  color:rgba(0, 0, 0, 0.548);;
+  background-color: rgb(47, 60, 134) ;
+}
+
+.button-container *{
+  grid-area: betchoices;
+  display: flex;
+  flex-direction: row; 
+  margin: 30px auto;
+  width: 100px;
+  height: 100px;
+  border: 13px dashed rgba(38, 41, 21, 0.548);
+  border-radius: 50%;
+  line-height: 100px;
+  text-align: center;
+  font-family: Helvetica;
+  color:rgba(38, 41, 21, 0.548);;
+  background-color: rgb(188, 190, 26) ;
+}
+
+.coins {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  margin: 30px auto;
+  width: 100px;
+  height: 100px;
+  border: 13px dashed white;
+  border-radius: 50%;
+  line-height: 100px;
+  text-align: center;
+  font-family: Helvetica;
+  color: white;
+}
+
+
+p1 {
+    grid-area: bet;
+}
+
+p2 {
+    grid-area: stack;
+}
+
+#ply-count{
+  font-size: 30px;
+  grid-area: fourth;
+}
+
+#reset {
+  grid-area: reset;
+  display: flex;
+  flex-direction: row; 
+  margin: 30px auto;
+  width: 100px;
+  height: 100px;
+  border: 13px dashed rgba(0, 0, 0, 0.548);
+  border-radius: 50%;
+  line-height: 100px;
+  text-align: center;
+  font-family: Helvetica;
+  color:rgba(0, 0, 0, 0.548);;
+  background-color: rgb(255, 255, 255) ;
+}
+
+#deal{
+  grid-area: deal;
+  display: flex;
+  flex-direction: row; 
+  margin: 30px auto;
+  width: 100px;
+  height: 100px;
+  border: 13px dashed rgba(0, 0, 0, 0.548);
+  border-radius: 50%;
+  line-height: 100px;
+  text-align: center;
+  font-family: Helvetica;
+  color:rgba(0, 0, 0, 0.548);;
+  background-color: rgb(255, 255, 255) ;
+}
+
+#winner {
+  grid-area: winmsg;
+  font-size: 30px;
+}
