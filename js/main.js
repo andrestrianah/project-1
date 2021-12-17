@@ -117,10 +117,10 @@ function plyTurn(e){
   cpuHand = gameDeck.splice (0,2);
   playerHand = gameDeck.splice (0,2);
     } else {
-      playerHand.push(shuffledDeck.splice(0, 1)[0]);
+      playerHand.push(gameDeck.splice(0, 1)[0]);
     }
-  if (checkTotal(playerHand) === limit) {
-      dealerPlay();
+  if (count(playerHand) === limit) {
+      cmpTurn();
     }
   } 
   render()
@@ -129,17 +129,13 @@ function plyTurn(e){
 function count(cards) {
 
   let total = 0;
-  card.forEach(function (item) {
+  cards.forEach(function (item) {
     total = total + item.value;
     if (item.value === 11 && total >21) {
       total = total - 10
     }
   });
-  while (total > 21 && aceHere ===true) {
-    total -= 10;
-    handHasAce.pop();
-  }
-  return total;
+   return total;
 }
 
 function cmpTurn(){
