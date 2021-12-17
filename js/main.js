@@ -42,7 +42,7 @@ let bet;
 
 // buttons(hit,replay,double,play,split,etc) , player and computer cards , the chips, the player's hand count,the wining message and the bank.
 
-let twentyEl = document.getElementById("betCoins");
+let coinsEl = document.getElementById("betCoins");
 let computerHandCon = document.getElementById("cpu-hand");
 let playerHandCon = document.getElementById("ply-hand")
 let winnerMessage = document.getElementById("winner");
@@ -57,12 +57,12 @@ const resetEl = document.getElementById("reset");
 const dealEl = document.getElementById("deal");
 
 // 4.add the event listeners for the buttons (hit,replay,double,play again,split,etc)
-twentyEl.addEventListener("click",pushBet);
+coinsEl.addEventListener("click",pushBet);
 resetEl.addEventListener("click",pushBet);
 dealEl.addEventListener("click",plyTurn);
 replayEl.addEventListener("click",replayGame);
 standEl.addEventListener("click",cmpTurn);
-hit.addEventListener("click",pushBet);
+hitEl.addEventListener("click",plyTurn);
 dble.addEventListener("click",doble);
 
 
@@ -112,11 +112,16 @@ function plyTurn(e){
   if (e.target.id === "deal"){
   plyPlay = true;
   console.log("itsmeagain");
-  if(bet > 0){
-    
-    console.log("whereare the cards");
-    playerHand = gameDeck.splice(0, 2);
-  }
+  if(bet > 0 && playerHand.length === 0 && cpuHand.length === 0){
+  console.log("where are the cards");
+  cpuHand = gameDeck.splice (0,2);
+  playerHand = gameDeck.splice (0,2);
+    } else {
+      playerHand.push(shuffledDeck.splice(0, 1)[0]);
+    }
+  if (checkTotal(playerHand) === limit) {
+      dealerPlay();
+    }
   } 
   render()
 }
@@ -124,6 +129,7 @@ function plyTurn(e){
 function cmpTurn(){
 
 }
+
 
 // 6. invoke the render function to transfer all the data that needs to be update on the dom. 
 // for the blackjack , you first will need to update the bank and the bet, after that, give the cards for the player and the computer and count the player cards.Then , if the player cards are over 21 or if it is lower to the computers hand(not over 21), computer wins and pop de message for the winner, if the player has a better hand than the computer or if the computer is bust(over 21), pop the message for the player. if both players have the same count, the player get the money back and is a tie.
@@ -145,7 +151,7 @@ function render(){
     winnerMessage = "";
   } else if ( bet > 0 && playerHand.length >= 2 && cpuHand.length >=2) {
     standEl.style.visibility = "visible";
-   hitEl.style.visibility = "visible";
+    hitEl.style.visibility = "visible";
   } else if(playerHand.length === 2){
      dble.style.visibility = "visible";
   } 
