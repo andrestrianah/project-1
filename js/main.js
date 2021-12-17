@@ -38,6 +38,8 @@ let winner = null;
 let shuffledDeck;
 let money;
 let bet;
+let stand;
+let deal;
 // 3.Cache elements that need to be updated in the htm:
 
 // buttons(hit,replay,double,play,split,etc) , player and computer cards , the chips, the player's hand count,the wining message and the bank.
@@ -106,6 +108,7 @@ function doble(e){
 function plyTurn(e){
   if (e.target.id === "deal" && bet > 0){
   console.log("itsmeagain");
+  deal = true;
   if(playerHand.length === 0 && cpuHand.length === 0){
   console.log("where are the cards");
   cpuHand = gameDeck.splice (0,2);
@@ -132,6 +135,7 @@ function hitIt(e){
 
 function standPlay(e){
   if (e.target.id === "stand"){
+    stand = true;
     console.log("stand works")
     cmpTurn()
   }
@@ -162,7 +166,8 @@ function count(cards) {
 // for the blackjack , you first will need to update the bank and the bet, after that, give the cards for the player and the computer and count the player cards.Then , if the player cards are over 21 or if it is lower to the computers hand(not over 21), computer wins and pop de message for the winner, if the player has a better hand than the computer or if the computer is bust(over 21), pop the message for the player. if both players have the same count, the player get the money back and is a tie.
 // if the first two cards of the player are an A's and a ten, player wins unless computer has a blackjack too. 
 function render(){
-
+  deal = false;
+  stand = false;
   betEl.innerHTML = bet;
   cashEl.innerHTML = money;
   replayEl.style.visibility = "hidden";
@@ -181,12 +186,25 @@ function render(){
     standEl.style.visibility = "visible";
     hitEl.style.visibility = "visible";
     resetEl.style.visibility = "hidden";
+
     renderDeckInContainer(playerHand, playerHandCon)
     renderDeckInContainer(cpuHand,computerHandCon)
-  } if (playerHand.length > 0) {
+  } if (playerHand.length > 0 && cpuHand.length > 0) {
     playerTotal = count(playerHand);
+    cpuTotal = count(cpuHand);
     plyCount.innerHTML = playerTotal;
-  }
+  } if (deal){
+    coinsEl.removeEventListener("click",pushBet);
+  } if(cpuTotal === playerTotal){
+    winnerMessage = "IT IS A TIE, YOU GET YOUR MONEY BACK";
+    money = money + bet;
+  } else if (playerTotal > 21 ){
+    winnerMessage = "YOU'RE BUSTED";
+  } else if (cpuTotal <=21 && cpuTotal > playerTotal && cpuHand.length > 2){
+    winnerMessage = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". DEALER WINS.";
+  } else if (playerTotal <=21 && playerHand >cpuTotal && playerHand.length > 2){
+    winnerMessage = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". PLAYER WINS.";
+  } 
 
 }
 
@@ -223,6 +241,13 @@ function renderDeckInContainer(deck, container) {
   //   return html + `<div class="card ${card.face}"></div>`;
   // }, '');
   container.innerHTML = cardsHtml;
+
+  if (deck === cpuHand && cpuHand.length <= 2 ) {
+    container.firstChild.classList.add("back-blue");
+  }
+  if (stand) {
+    container.firstChild.classList.remove("back-blue");
+  }
 }
 
 function buildMasterDeck() {
