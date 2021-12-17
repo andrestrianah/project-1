@@ -19,8 +19,6 @@ const ranks = [
   "A",
 ];
 
-const limit = 21;
-
 const masterDeck = buildMasterDeck();
 // Also, add the images of each card and some sounds for the game.
 
@@ -53,8 +51,7 @@ let betEl =document.getElementById("cashbet");
 let cashEl =document.getElementById("cash");
 const replayEl = document.getElementById("replay");
 const standEl = document.getElementById("stand");
-const hitEl = document.getElementById("hit");
-const dble = document.getElementById("double"); 
+const hitEl = document.getElementById("hit"); 
 const resetEl = document.getElementById("reset");
 const dealEl = document.getElementById("deal");
 
@@ -65,13 +62,14 @@ dealEl.addEventListener("click",plyTurn);
 replayEl.addEventListener("click",replayGame);
 standEl.addEventListener("click",standPlay);
 hitEl.addEventListener("click",hitIt);
-dble.addEventListener("click",doble);
 
 
 // 5.call the init function. The purpose of init, is to initialize our state variables for the start of the game, so give the initial values for the init function.
 gameDeck = getNewShuffledDeck();
 
 function init(){
+   deal = false;
+   stand = false;
    bet = 0;
    money = 10000;
    console.log('init working')
@@ -93,18 +91,6 @@ function pushBet(e){
   } 
 }
 
-function doble(e){
-  if (e.target.id === "double"){
-    money = money - bet;
-    bet = bet + bet;
-    plyTurn();
-    cmpTurn();
-  }
-
-  render();
-}
-
-
 function plyTurn(e){
   if (e.target.id === "deal" && bet > 0){
   console.log("itsmeagain");
@@ -114,7 +100,7 @@ function plyTurn(e){
   cpuHand = gameDeck.splice (0,2);
   playerHand = gameDeck.splice (0,2);
     } 
-  if (count(playerHand) === limit) {
+  if (count(playerHand) === 21) {
       cmpTurn();
     }
   } 
@@ -127,7 +113,7 @@ function hitIt(e){
     playerHand.push(gameDeck.splice(0, 1)[0]);  
   }
 
-  if (count(playerHand) === limit) {
+  if (count(playerHand) === 21) {
     cmpTurn();
   }
   render();
@@ -154,26 +140,31 @@ render()
 function count(cards) {
 
   let total = 0;
+  let hasAce = [];
   cards.forEach(function (item) {
     total = total + item.value;
-    if (item.value === 11 && total >21) {
-      total = total - 10
+    if (item.value === 11) {
+      hasAce.push(true);
+    }if(playerTotal >= 21){
+      stand = true;
     }
   });
-   return total;
+  while (total > 21 && hasAce.length) {
+    total -= 10;
+    hasAce.pop();
+  }
+  return total;
 }
 // 6. invoke the render function to transfer all the data that needs to be update on the dom. 
 // for the blackjack , you first will need to update the bank and the bet, after that, give the cards for the player and the computer and count the player cards.Then , if the player cards are over 21 or if it is lower to the computers hand(not over 21), computer wins and pop de message for the winner, if the player has a better hand than the computer or if the computer is bust(over 21), pop the message for the player. if both players have the same count, the player get the money back and is a tie.
 // if the first two cards of the player are an A's and a ten, player wins unless computer has a blackjack too. 
 function render(){
-  deal = false;
-  stand = false;
+  
   betEl.innerHTML = bet;
   cashEl.innerHTML = money;
   replayEl.style.visibility = "hidden";
   standEl.style.visibility = "hidden";
   hitEl.style.visibility = "hidden";
-  dble.style.visibility = "hidden";
 
   playerHandCon.innerHTML = "";
   computerHandCon.innerHTML = "";  
@@ -192,23 +183,39 @@ function render(){
   } if (playerHand.length > 0 && cpuHand.length > 0) {
     playerTotal = count(playerHand);
     cpuTotal = count(cpuHand);
-    plyCount.innerHTML = playerTotal;
+    plyCount.innerHTML = "PLAYER HAND: " + playerTotal;
   } if (deal){
     coinsEl.removeEventListener("click",pushBet);
-  } if(cpuTotal === playerTotal){
-    winnerMessage = "IT IS A TIE, YOU GET YOUR MONEY BACK";
-    money = money + bet;
-  } else if (playerTotal > 21 ){
-    winnerMessage = "YOU'RE BUSTED";
-  } else if (cpuTotal <=21 && cpuTotal > playerTotal && cpuHand.length > 2){
-    winnerMessage = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". DEALER WINS.";
-  } else if (playerTotal <=21 && playerHand >cpuTotal && playerHand.length > 2){
-    winnerMessage = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". PLAYER WINS.";
-  } 
-
+  }  if (stand){ 
+    if (playerTotal <= 21 && cpuTotal > 21){
+      winner="player"
+      winnerMessage.innerHTML="DEALER BUSTED, PLAYER WINS."
+    } else if (playerTotal > 21 ){
+      winner=
+      winnerMessage.innerHTML = "YOU'RE BUSTED";
+    } else if (cpuTotal <=21 && cpuTotal > playerTotal && cpuHand.length >= 2){
+      winnerMessage.innerHTML = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". DEALER WINS.";
+    }   else if (playerTotal <=21 && playerTotal >cpuTotal && playerHand.length >= 2){
+      winnerMessage.innerHTML = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". PLAYER WINS.";
+    } else if(cpuTotal === playerTotal  && playerHand.length >= 2){
+      winnerMessage.innerHTML = "IT IS A TIE, YOU GET YOUR MONEY BACK";
+      money = money + bet;
+    } else if(playerTotal === 21 && playerHand.length === 2){
+      winnerMessage.innerHTML = "BLACKJACK!!! PLAYER WINS";
+    } else if(cpuTotal === 21 && cpuHand.length === 2){
+    winnerMessage.innerHTML = "BLACKJACK!!! DEALER WINS";
+    }
+    replayEl.style.visibility = "visible";
+    standEl.style.visibility = "hidden";
+    hitEl.style.visibility = "hidden";
+  }
 }
 
-function replayGame(){
+// 7. reset the game by updating the new values for the bank and place the cards that were used in the bottom of the deck.
+function replayGame(e){
+  if (e.target.id === "replay"){
+    console.log("replay works")
+  }
 
 }
 
@@ -272,5 +279,4 @@ init();
 
 // also give a function for the split and double option.
 
-// 7. reset the game by updating the new values for the bank and place the cards that were used in the bottom of the deck.
 

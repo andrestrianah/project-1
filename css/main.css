@@ -18,7 +18,7 @@
 
   main {
     display: grid;
-    grid-template-columns: 20vmin 20vmin 80vmin 60vmin   ;
+    grid-template-columns: 60vmin 40vmin 40vmin 60vmin   ;
     grid-template-rows: 30vmin 30vmin 10vmin 10vmin ;
     grid-template-areas:
     "first second cpcards deck"
@@ -124,8 +124,8 @@
   }
 
   #ply-count{
-      font-size: 40px;
-      grid-area: count;
+    font-size: 30px;
+    grid-area: fourth;
   }
 
   #reset {
