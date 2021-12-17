@@ -59,14 +59,8 @@ coinsEl.addEventListener("click",pushBet);
 resetEl.addEventListener("click",pushBet);
 dealEl.addEventListener("click",plyTurn);
 replayEl.addEventListener("click",replayGame);
-<<<<<<< HEAD
-standEl.addEventListener("click",cmpTurn);
-hitEl.addEventListener("click",plyTurn);
-dble.addEventListener("click",doble);
-=======
 standEl.addEventListener("click",standPlay);
 hitEl.addEventListener("click",hitIt);
->>>>>>> main
 
 
 // 5.call the init function. The purpose of init, is to initialize our state variables for the start of the game, so give the initial values for the init function.
@@ -127,35 +121,12 @@ function hitIt(e){
   render();
 }
 
-<<<<<<< HEAD
-function replayGame(){
-
-}
-
-function plyTurn(e){
-  if (e.target.id === "deal"){
-  plyPlay = true;
-  console.log("itsmeagain");
-  if(bet > 0 && playerHand.length === 0 && cpuHand.length === 0){
-  console.log("where are the cards");
-  cpuHand = gameDeck.splice (0,2);
-  playerHand = gameDeck.splice (0,2);
-    } else {
-      playerHand.push(shuffledDeck.splice(0, 1)[0]);
-    }
-  if (checkTotal(playerHand) === limit) {
-      dealerPlay();
-    }
-  } 
-  render()
-=======
 function standPlay(e){
   if (e.target.id === "stand"){
     stand = true;
     console.log("stand works")
     cmpTurn()
   }
->>>>>>> main
 }
 
 function cmpTurn(){
@@ -167,8 +138,6 @@ render()
 }
 
 
-<<<<<<< HEAD
-=======
 
 function count(cards) {
 
@@ -188,7 +157,6 @@ function count(cards) {
   }
   return total;
 }
->>>>>>> main
 // 6. invoke the render function to transfer all the data that needs to be update on the dom. 
 // for the blackjack , you first will need to update the bank and the bet, after that, give the cards for the player and the computer and count the player cards.Then , if the player cards are over 21 or if it is lower to the computers hand(not over 21), computer wins and pop de message for the winner, if the player has a better hand than the computer or if the computer is bust(over 21), pop the message for the player. if both players have the same count, the player get the money back and is a tie.
 // if the first two cards of the player are an A's and a ten, player wins unless computer has a blackjack too. 
@@ -210,14 +178,6 @@ function render(){
   } else if ( bet > 0 && playerHand.length >= 2 && cpuHand.length >=2) {
     standEl.style.visibility = "visible";
     hitEl.style.visibility = "visible";
-<<<<<<< HEAD
-  } else if(playerHand.length === 2){
-     dble.style.visibility = "visible";
-  } 
-
-
-
-=======
     resetEl.style.visibility = "hidden";
     dealEl.style.visibility = "hidden";
 
@@ -254,7 +214,6 @@ function render(){
     hitEl.style.visibility = "hidden";
     
   }
->>>>>>> main
 }
 
 // 7. reset the game by updating the new values for the bank and place the cards that were used in the bottom of the deck.
