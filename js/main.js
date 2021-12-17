@@ -146,7 +146,7 @@ function count(cards) {
   cards.forEach(function (item) {
     total = total + item.value;
     if (item.value === 11) {
-      hasAce.push(true);
+      hasAce.push(1);
     }if(playerTotal >= 21){
       stand = true;
     }
@@ -190,7 +190,10 @@ function render(){
   } if (deal){
      coinsEl.removeEventListener("click",pushBet);
   }  if (stand){
-      if(playerTotal === 21 && playerHand.length === 2){
+    if(cpuTotal === playerTotal  && playerHand.length >= 2){
+       money = money + bet;
+        winnerMessage.innerHTML = "IT IS A TIE, YOU GET YOUR MONEY BACK";
+    } else if(playerTotal === 21 && playerHand.length === 2){
         winnerMessage.innerHTML = "BLACKJACK!!! PLAYER WINS";
         money = money + bet * 3;
     } else if(cpuTotal === 21 && cpuHand.length === 2){
@@ -205,9 +208,6 @@ function render(){
     } else if (playerTotal <=21 && playerTotal >cpuTotal && playerHand.length >= 2){
         money = money + bet * 2;
         winnerMessage.innerHTML = "THE DEALER HAND IS " + cpuTotal +" AND THE PLAYER HAND IS "+ playerTotal +". PLAYER WINS.";
-    } else if(cpuTotal === playerTotal  && playerHand.length >= 2){
-        money = money + bet;
-        winnerMessage.innerHTML = "IT IS A TIE, YOU GET YOUR MONEY BACK";
     } 
     replayEl.style.visibility = "visible";
     standEl.style.visibility = "hidden";
